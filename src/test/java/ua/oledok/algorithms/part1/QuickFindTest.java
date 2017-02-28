@@ -26,6 +26,8 @@ public class QuickFindTest {
         qf.union(0, 2);
 
         Assert.assertTrue(qf.isConnected(0, 2));
+        Assert.assertFalse(qf.isConnected(1, 2));
+        Assert.assertFalse(qf.isConnected(1, 0));
         Assert.assertArrayEquals(new int[]{2, 1, 2}, ids);
     }
 
