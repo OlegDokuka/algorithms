@@ -35,10 +35,12 @@ public class QuickUnionTest {
         qu.union(3, 4);
 
         Assert.assertEquals(4, qu.root(2));
+        Assert.assertEquals(1, qu.root(1));
+        Assert.assertEquals(1, qu.root(0));
     }
 
     @Test
-    public void shouldCreateConnectedTrees() {
+    public void shouldCreateConnectedTrees() throws NoSuchFieldException, IllegalAccessException {
         QuickUnion qu = new QuickUnion(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
         Field idsField = QuickUnion.class.getDeclaredField("ids");
 
@@ -62,6 +64,13 @@ public class QuickUnionTest {
         Assert.assertTrue(qu.isConnected(2, 0));
         Assert.assertFalse(qu.isConnected(2, 9));
 
-        Assert.assertArrayEquals(new int[]{1, 5, 5, 4, 5, 6, 7, 9, 4}, ids);
+        Assert.assertArrayEquals(new int[]{1, 5, 5, 4, 4, 5, 6, 7, 9, 4}, ids);
+    }
+
+    @Test
+    public void rootOfDetachedElementShouldPointingOnItsSelf() {
+        QuickUnion qu = new QuickUnion(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+        Assert.assertEquals(2, qu.root(2));
     }
 }
