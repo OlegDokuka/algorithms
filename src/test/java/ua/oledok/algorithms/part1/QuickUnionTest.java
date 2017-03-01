@@ -27,6 +27,29 @@ public class QuickUnionTest {
     }
 
     @Test
+    public void alreadyConnectedElementsShouldNotChangeParentOnRedundantUnion() throws NoSuchFieldException,
+            IllegalAccessException {
+        QuickUnion qu = new QuickUnion(new int[]{0, 1, 2, 3, 4, 5, 6, 7});
+        Field idsField = QuickUnion.class.getDeclaredField("ids");
+
+        idsField.setAccessible(true);
+
+        int[] ids = (int[]) idsField.get(qu);
+
+        qu.union(0, 1);
+        qu.union(1, 2);
+        qu.union(2, 3);
+        qu.union(3, 4);
+
+        qu.union(0, 4);
+        qu.union(1, 4);
+        qu.union(2, 4);
+
+
+        Assert.assertArrayEquals(new int[]{1, 2, 3, 4, 4, 5, 6, 7}, ids);
+    }
+
+    @Test
     public void shouldFindARoot() {
         QuickUnion qu = new QuickUnion(new int[]{0, 1, 2, 3, 4, 5, 6, 7});
 
