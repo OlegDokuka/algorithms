@@ -88,7 +88,7 @@ public class WeightedQuickUnionTest {
         Assert.assertTrue(wqu.isConnected(2, 0));
         Assert.assertFalse(wqu.isConnected(2, 9));
 
-        Assert.assertArrayEquals(new int[]{1, 5, 5, 4, 4, 5, 6, 7, 9, 4}, ids);
+        Assert.assertArrayEquals(new int[]{1, 5, 5, 4, 5, 5, 6, 7, 9, 5}, ids);
     }
 
     @Test
