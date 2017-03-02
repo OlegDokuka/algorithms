@@ -5,16 +5,10 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private final WeightedQuickUnionUF wqu;
-    private final byte[] states;
+    private final boolean[] states;
     private final int sideSize;
     private final int size;
     private int openSites;
-
-
-    // test client (optional)
-    public static void main(String[] args) {
-
-    }
 
     /**
      * create n-by-n grid, with all sites blocked
@@ -28,17 +22,9 @@ public class Percolation {
 
         size = n * n + 2;
 
-        int first = 0;
-        int last = size - 1;
-
         sideSize = n;
         wqu = new WeightedQuickUnionUF(size);
-        states = new byte[size];
-
-        for (int i = 1; i <= n; i++) {
-            wqu.union(first, i);
-            wqu.union(last, last - i);
-        }
+        states = new boolean[size - 2];
     }
 
     /**
@@ -50,24 +36,28 @@ public class Percolation {
     public void open(int row, int col) {
         int index = index(row, col);
 
-        if (states[index] > 0) {
+        if (states[index]) {
             return;
         }
 
-        states[index]++;
+        states[index] = true;
 
-        if (row > 1) {
+        if (row == 1) {
+            wqu.union(0, index + 1);
+        } else {
             int indexTop = index(row - 1, col);
 
-            if (states[indexTop] > 0) {
+            if (states[indexTop]) {
                 wqu.union(index + 1, indexTop + 1);
             }
         }
 
-        if (row < sideSize) {
+        if (row == sideSize) {
+            wqu.union(size - 1, index + 1);
+        } else {
             int indexBottom = index(row + 1, col);
 
-            if (states[indexBottom] > 0) {
+            if (states[indexBottom]) {
                 wqu.union(index + 1, indexBottom + 1);
             }
         }
@@ -75,7 +65,7 @@ public class Percolation {
         if (col > 1) {
             int indexLeft = index(row, col - 1);
 
-            if (states[indexLeft] > 0) {
+            if (states[indexLeft]) {
                 wqu.union(index + 1, indexLeft + 1);
             }
         }
@@ -83,13 +73,9 @@ public class Percolation {
         if (col < sideSize) {
             int indexRight = index(row, col + 1);
 
-            if (states[indexRight] > 0) {
+            if (states[indexRight]) {
                 wqu.union(index + 1, indexRight + 1);
             }
-        }
-
-        if (wqu.connected(index + 1, 0)) {
-            states[index]++;
         }
 
         openSites++;
@@ -105,7 +91,7 @@ public class Percolation {
     public boolean isOpen(int row, int col) {
         int index = index(row, col);
 
-        return states[index] > 0;
+        return states[index];
     }
 
     /**
@@ -118,7 +104,7 @@ public class Percolation {
     public boolean isFull(int row, int col) {
         int index = index(row, col);
 
-        return states[index] > 1;
+        return wqu.connected(0, index + 1);
     }
 
     /**

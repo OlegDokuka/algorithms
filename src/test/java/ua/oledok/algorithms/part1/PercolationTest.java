@@ -1,9 +1,26 @@
 package ua.oledok.algorithms.part1;
 
 
+import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Test;
 
 public class PercolationTest {
+
+    @Test
+    public void shouldPercolate() {
+        Percolation percolation = new Percolation(20);
+        int iterations = 0;
+
+        do {
+            int row = StdRandom.uniform(20) + 1;
+            int col = StdRandom.uniform(20) + 1;
+
+            percolation.open(row, col);
+            iterations++;
+        } while (!percolation.percolates());
+
+        String.valueOf(iterations);
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionOnNegativeN() {
