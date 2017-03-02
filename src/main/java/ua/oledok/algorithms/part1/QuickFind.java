@@ -4,20 +4,14 @@ public class QuickFind implements DynamicConnectivity {
     private final int[] ids;
     private int size;
 
-    public QuickFind(int[] values) {
-        size = values.length;
-        ids = new int[size];
-
-        System.arraycopy(values, 0, ids, 0, size);
+    public QuickFind(int n) {
+        size = n;
+        ids = DynamicConnectivity.generate(n);
     }
 
     @Override
     public int size() {
         return size;
-    }
-
-    public boolean isConnected(int q, int p) {
-        return ids[q] == ids[p];
     }
 
     @Override
@@ -26,12 +20,12 @@ public class QuickFind implements DynamicConnectivity {
     }
 
     public void union(int q, int p) {
-        if (isConnected(q, p)) {
-            return;
-        }
-
         int qid = ids[q];
         int pid = ids[p];
+
+        if (qid == pid) {
+            return;
+        }
 
         for (int i = 0; i < ids.length; i++) {
             if (i == p) {
@@ -42,5 +36,7 @@ public class QuickFind implements DynamicConnectivity {
                 ids[i] = pid;
             }
         }
+
+        size--;
     }
 }

@@ -5,11 +5,9 @@ public class QuickUnion implements DynamicConnectivity {
     private final int[] ids;
     private int size;
 
-    public QuickUnion(int[] values) {
-        size = values.length;
-        ids = new int[size];
-
-        System.arraycopy(values, 0, ids, 0, size);
+    public QuickUnion(int n) {
+        size = n;
+        ids = DynamicConnectivity.generate(n);
     }
 
     public void union(int q, int p) {
@@ -29,9 +27,6 @@ public class QuickUnion implements DynamicConnectivity {
         return size;
     }
 
-    public boolean isConnected(int q, int p) {
-        return root(q) == root(p);
-    }
 
     public int root(int value) {
         while (ids[value] != value) {

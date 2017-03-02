@@ -1,10 +1,18 @@
 package ua.oledok.algorithms.part1;
 
+import java.util.stream.IntStream;
+
 public interface DynamicConnectivity {
 
-    int size();
+    static int[] generate(int n) {
+        return IntStream.range(0, n).toArray();
+    }
 
-    boolean isConnected(int q, int p);
+    default boolean isConnected(int q, int p) {
+        return root(q) == root(p);
+    }
+
+    int size();
 
     int root(int value);
 
