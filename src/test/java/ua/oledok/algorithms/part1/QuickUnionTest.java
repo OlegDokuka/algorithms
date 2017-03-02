@@ -10,14 +10,14 @@ public class QuickUnionTest {
 
     @Test
     public void twoDetachedElementsShouldNotBeConnected() {
-        QuickUnion qu = new QuickUnion(new int[]{0, 1, 2});
+        QuickUnion qu = new QuickUnion(3);
 
         Assert.assertFalse(qu.isConnected(0, 2));
     }
 
     @Test
     public void shouldJustUnionTwoElements() {
-        QuickUnion qu = new QuickUnion(new int[]{0, 1, 2});
+        QuickUnion qu = new QuickUnion(3);
 
         qu.union(0, 2);
 
@@ -29,7 +29,7 @@ public class QuickUnionTest {
     @Test
     public void alreadyConnectedElementsShouldNotChangeParentOnRedundantUnion() throws NoSuchFieldException,
             IllegalAccessException {
-        QuickUnion qu = new QuickUnion(new int[]{0, 1, 2, 3, 4, 5, 6, 7});
+        QuickUnion qu = new QuickUnion(8);
         Field idsField = QuickUnion.class.getDeclaredField("ids");
 
         idsField.setAccessible(true);
@@ -51,7 +51,7 @@ public class QuickUnionTest {
 
     @Test
     public void shouldFindARoot() {
-        QuickUnion qu = new QuickUnion(new int[]{0, 1, 2, 3, 4, 5, 6, 7});
+        QuickUnion qu = new QuickUnion(8);
 
         qu.union(0, 1);
         qu.union(2, 3);
@@ -64,7 +64,7 @@ public class QuickUnionTest {
 
     @Test
     public void shouldCreateConnectedTrees() throws NoSuchFieldException, IllegalAccessException {
-        QuickUnion qu = new QuickUnion(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
+        QuickUnion qu = new QuickUnion(10);
         Field idsField = QuickUnion.class.getDeclaredField("ids");
 
         idsField.setAccessible(true);
@@ -92,7 +92,7 @@ public class QuickUnionTest {
 
     @Test
     public void rootOfDetachedElementShouldPointingOnItsSelf() {
-        QuickUnion qu = new QuickUnion(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
+        QuickUnion qu = new QuickUnion(10);
 
         Assert.assertEquals(2, qu.root(2));
     }
