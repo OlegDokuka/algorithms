@@ -1,24 +1,32 @@
 package ua.oledok.algorithms.part1;
 
 
-public class QuickUnion {
+public class QuickUnion implements DynamicConnectivity {
     private final int[] ids;
+    private int size;
 
-    public QuickUnion(int[] values) {
-        ids = new int[values.length];
-        System.arraycopy(values, 0, ids, 0, values.length);
+    public QuickUnion(int n) {
+        size = n;
+        ids = DynamicConnectivity.generate(n);
     }
 
     public void union(int q, int p) {
         int qRoot = root(q);
         int pRoot = root(p);
 
+        if (qRoot == pRoot) {
+            return;
+        }
+
         ids[qRoot] = pRoot;
+        size--;
     }
 
-    public boolean isConnected(int q, int p) {
-        return root(q) == root(p);
+    @Override
+    public int size() {
+        return size;
     }
+
 
     public int root(int value) {
         while (ids[value] != value) {

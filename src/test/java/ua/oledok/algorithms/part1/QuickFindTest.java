@@ -9,14 +9,14 @@ public class QuickFindTest {
 
     @Test
     public void twoDetachedElementsShouldNotBeConnected() {
-        QuickFind qf = new QuickFind(new int[]{0, 1, 2});
+        QuickFind qf = new QuickFind(3);
 
         Assert.assertFalse(qf.isConnected(1, 2));
     }
 
     @Test
     public void shouldJustUnionTwoElements() throws NoSuchFieldException, IllegalAccessException {
-        QuickFind qf = new QuickFind(new int[]{0, 1, 2});
+        QuickFind qf = new QuickFind(3);
         Field idsField = QuickFind.class.getDeclaredField("ids");
 
         idsField.setAccessible(true);
@@ -33,7 +33,7 @@ public class QuickFindTest {
 
     @Test
     public void shouldUnionAllSameElements() throws NoSuchFieldException, IllegalAccessException {
-        QuickFind qf = new QuickFind(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
+        QuickFind qf = new QuickFind(10);
         Field idsField = QuickFind.class.getDeclaredField("ids");
 
         idsField.setAccessible(true);
@@ -50,7 +50,7 @@ public class QuickFindTest {
 
     @Test
     public void shouldContainSeveralUnionCollections() throws NoSuchFieldException, IllegalAccessException {
-        QuickFind qf = new QuickFind(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
+        QuickFind qf = new QuickFind(10);
         Field idsField = QuickFind.class.getDeclaredField("ids");
 
         idsField.setAccessible(true);
