@@ -27,17 +27,14 @@ public class PercolationStats {
         for (int i = 0; i < trials; i++) {
             Percolation percolation = new Percolation(n);
 
-            for (int j = 0; j < generations; j++) {
-                int row = StdRandom.uniform(20) + 1;
-                int col = StdRandom.uniform(20) + 1;
+            do {
+                int row = StdRandom.uniform(n) + 1;
+                int col = StdRandom.uniform(n) + 1;
 
                 percolation.open(row, col);
-                thresholds[i] = (double) percolation.numberOfOpenSites() / (double) generations;
+            } while (!percolation.percolates());
 
-                if (percolation.percolates()) {
-                    break;
-                }
-            }
+            thresholds[i] = (double) percolation.numberOfOpenSites() / (double) generations;
         }
     }
 
