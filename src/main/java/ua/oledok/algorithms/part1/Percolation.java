@@ -2,9 +2,10 @@ package ua.oledok.algorithms.part1;
 
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-
+//TODO: how to fit in 11n^2+128n+1024 memory size?
 public class Percolation {
     private final WeightedQuickUnionUF wqu;
+    private final WeightedQuickUnionUF wquInner;
     private final boolean[] states;
     private final int sideSize;
     private final int size;
@@ -24,6 +25,7 @@ public class Percolation {
 
         sideSize = n;
         wqu = new WeightedQuickUnionUF(size);
+        wquInner = new WeightedQuickUnionUF(size);
         states = new boolean[size - 2];
     }
 
@@ -44,11 +46,13 @@ public class Percolation {
 
         if (row == 1) {
             wqu.union(0, index + 1);
+            wquInner.union(0, index + 1);
         } else {
             int indexTop = index(row - 1, col);
 
             if (states[indexTop]) {
                 wqu.union(index + 1, indexTop + 1);
+                wquInner.union(index + 1, indexTop + 1);
             }
         }
 
@@ -59,6 +63,7 @@ public class Percolation {
 
             if (states[indexBottom]) {
                 wqu.union(index + 1, indexBottom + 1);
+                wquInner.union(index + 1, indexBottom + 1);
             }
         }
 
@@ -67,6 +72,7 @@ public class Percolation {
 
             if (states[indexLeft]) {
                 wqu.union(index + 1, indexLeft + 1);
+                wquInner.union(index + 1, indexLeft + 1);
             }
         }
 
@@ -75,6 +81,7 @@ public class Percolation {
 
             if (states[indexRight]) {
                 wqu.union(index + 1, indexRight + 1);
+                wquInner.union(index + 1, indexRight + 1);
             }
         }
 
@@ -104,7 +111,7 @@ public class Percolation {
     public boolean isFull(int row, int col) {
         int index = index(row, col);
 
-        return wqu.connected(0, index + 1);
+        return wquInner.connected(0, index + 1);
     }
 
     /**
