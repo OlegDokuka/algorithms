@@ -16,8 +16,8 @@ public class Permutation {
             }
 
             while (!StdIn.isEmpty()) {
-                queue.dequeue();
                 queue.enqueue(StdIn.readString());
+                queue.dequeue();
             }
 
             for (String val : queue) {
